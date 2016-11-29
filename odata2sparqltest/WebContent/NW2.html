@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+         or more contributor license agreements.  See the NOTICE file
+         distributed with this work for additional information
+         regarding copyright ownership.  The ASF licenses this file
+         to you under the Apache License, Version 2.0 (the
+         "License"); you may not use this file except in compliance
+         with the License.  You may obtain a copy of the License at
+  
+           http://www.apache.org/licenses/LICENSE-2.0
+  
+         Unless required by applicable law or agreed to in writing,
+         software distributed under the License is distributed on an
+         "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+         KIND, either express or implied.  See the License for the
+         specific language governing permissions and limitations
+         under the License.
+-->
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="resources/jquery.js" type="text/javascript"></script>
+<script src="resources/jquery.form.js" type="text/javascript"></script>
+<script>
+var data1= '<?xml version="1.0" encoding="utf-8"?> <entry xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xml:base="http://localhost:8080/odata/2.0/NW/"><id>http://localhost:8080/odata/2.0/NW/Customer(&#x27;NWD%3ACustomer-TEST1&#x27;)</id><title type="text">Customer</title><updated>2014-08-30T08:20:42.349-04:00</updated><category term="northwind.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/><content type="application/xml"><m:properties><d:subjectId>NWD:Customer-TEST1</d:subjectId><d:label>TEST1</d:label><d:comment m:null="true"/><d:fax>11.22.33.44</d:fax><d:postalCode>12345</d:postalCode><d:city>Rock</d:city><d:contactName>John Doe</d:contactName><d:address>Littletown</d:address><d:contactTitle>Sales</d:contactTitle><d:region m:null="true"/><d:companyName>ACME</d:companyName><d:phone>11.22.33.55</d:phone><d:country>EU</d:country></m:properties></content></entry>'
+var data2= '<?xml version="1.0" encoding="utf-8"?> <entry xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xml:base="http://localhost:8080/odata/2.0/NW/"><id>http://localhost:8080/odata/2.0/NW/Customer(&#x27;NWD%3ACustomer-TEST1&#x27;)</id><title type="text">Customer</title><updated>2014-08-30T08:20:42.349-04:00</updated><category term="northwind.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/><content type="application/xml"><m:properties><d:subjectId>NWD:Customer-TEST1</d:subjectId><d:label>TEST1</d:label><d:comment m:null="true"/><d:fax>(new fax)</d:fax><d:postalCode>12345</d:postalCode><d:city>Rock</d:city><d:contactName>John Doe</d:contactName><d:address>Littletown</d:address><d:contactTitle>Sales</d:contactTitle><d:region m:null="true"/><d:companyName>ACME</d:companyName><d:phone>(new phone)</d:phone><d:country>EU</d:country></m:properties></content></entry>'
+</script>
+<script>
+
+function postData(operation, data,contentType){
+	$.ajax({type: 'POST', url: "../odata2sparql/2.0/NW" + operation, data: data, error: showErrorResponse, success: showResponse, contentType: contentType,async:true});
+};
+function putData(operation, data,contentType){
+	$.ajax({type: 'PUT', url: "../odata2sparql/2.0/NW" + operation, data: data, error: showErrorResponse,success: showResponse, contentType: contentType,async:true});
+};
+function deleteData(operation){
+	$.ajax({type: 'DELETE' ,url: "../odata2sparql/2.0/NW" +operation, error: showErrorResponse,success: showResponse,async:true});
+
+};
+function showResponse(responseText, textStatus, xhr, $form)  {
+	try{
+		alert('status: ' + textStatus + '\n\nresponseText: \n' + (new XMLSerializer()).serializeToString(responseText) );
+		}
+	catch(e){
+		alert('status: ' + textStatus + '\n\nresponseText: \n' + responseText ); 
+		}
+  
+};
+function showErrorResponse(jqXHR, textStatus, errorThrown)  {
+  alert('status: ' + textStatus + '\n\Error: \n' + errorThrown );
+};
+</script>
+</head>
+<body>
+		<h1>OData2SPARQL - NW</h1>
+		<h2>Northwind V2</h2>
+		<ol>
+				<li>
+						<ol>
+								<li>ODATA2SPARQL Meta data
+										<ol>
+												<li><a href="../odata2sparql/2.0/ODATA2SPARQL/">/2.0/ODATA2SPARQL</a></li>
+												<li><a href="../odata2sparql/2.0/ODATA2SPARQL/$metadata">/2.0/ODATA2SPARQL/$metadata</a></li>
+										</ol>
+								</li>
+						</ol>
+				</li>
+				<li>
+						<ol>
+								<li>NW Meta data
+										<ol>
+												<li><a href="../odata2sparql/2.0/NW/">/2.0/NW</a></li>
+												<li><a href="../odata2sparql/2.0/NW/$metadata">/2.0/NW/$metadata</a></li>
+										</ol>
+								</li>
+						</ol>
+				</li>
+				<li>
+						<ol>
+								<li>Manage repositories
+										<ol>
+												<li><a href="../odata2sparql/$reset/NW/">/$reset/NW/ ... reset the NW/$metadata</a></li>
+												<li><a href="../odata2sparql/$reset/*/">/$reset/*/ ... reset all $metadata</a></li>
+												<li><a href="../odata2sparql/$reload/NW/">/$reload/NW/ ... reload the models.ttl, and hence all the $metadata</a></li>
+										</ol>
+								</li>
+						</ol>
+				</li>
+								<li>
+						<ol>
+								<li>NW RDF queries
+										<ol>
+												<li><a href="../odata2sparql/2.0/NW/rdfs_Resource">/rdfs_Resource</a></li>
+												<li><a href="../odata2sparql/2.0/NW/rdfs_Resource()/$count">/rdfs_Resource()/$count</a></li>
+												<li><a href="../odata2sparql/2.0/NW/rdfs_Resource()?$filter=subject eq 'NWD:Customer-SEVES'">/rdfs_Resource()?$filter=subject eq
+																'NWD:Customer-SEVES'</a></li>
+												<li><a href="../odata2sparql/2.0/NW/rdfs_Resource('NWD:Customer-SEVES')">/rdfs_Resource('northwind:Customer-SEVES')</a></li>
+												<li><a href="../odata2sparql/2.0/NW/owl_Thing">/owl_Thing</a></li>
+												<li><a href="../odata2sparql/2.0/NW/owl_Thing()/$count">/owl_Thing()/$count</a></li>
+												<li><a href="../odata2sparql/2.0/NW/owl_Thing()?$filter=subjectId eq 'NWD:Customer-SEVES'">/owl_Thing()?$filter=subjectId eq
+																'NWD:Customer-SEVES'</a></li>
+												<li><a href="../odata2sparql/2.0/NW/owl_Thing('NWD:Customer-SEVES')">/owl_Thing('northwind:Customer-SEVES')</a></li>
+												<li><a href="../odata2sparql/2.0/NW/rdf_Statement">/rdf_Statement</a></li>
+												<li><a href="../odata2sparql/2.0/NW/rdf_Statement()?$select=predicate,object">/rdf_Statement()?$select=predicate,object</a></li>
+												<li><a href="../odata2sparql/2.0/NW/rdf_Statement()?$filter=substringof('SEVES',objectId)">/rdf_Statement()?$filter=substringof('SEVES',object)</a></li>
+										</ol>
+								</li>
+								<li>NW RDFS/OWL queries
+										<ol>
+												<li><a
+														href="../odata2sparql/2.0/NW/Order()?$select=subjectId,shipCountry,shippedDate,customer/subjectId,customer/companyName,customer/contactName,employee/firstName,employee/reportsTo/lastName&$filter=(((((subjectId eq 'NWD:Order-10340'))or((subjectId eq 'NWD:Order-10999'))))and(((substringof('Fr',shipCountry))or(substringof('Ge',shipCountry)))and(shippedDate lt datetime'1998-01-01T00:00:00')and((((customer/subjectId eq 'NWD:Customer-ALFKI'))or((customer/subjectId eq 'NWD:Customer-BONAP'))))and(substringof('Bon',customer/companyName))and(substringof('Leb',customer/contactName))and(substringof('Nancy',employee/firstName))))&$expand=customer,employee,employee/reportsTo">Order()?$select=subjectId,shipCountry,shippedDate,customer/subjectId,customer/companyName,customer/contactName,employee/firstName,employee/reportsTo/lastName&$filter=(((((subjectId eq 'NWD:Order-10340'))or((subjectId eq 'NWD:Order-10999'))))and(((substringof('Fr',shipCountry))or(substringof('Ge',shipCountry)))and(shippedDate lt datetime'1998-01-01T00:00:00')and((((customer/subjectId eq 'NWD:Customer-ALFKI'))or((customer/subjectId eq 'NWD:Customer-BONAP'))))and(substringof('Bon',customer/companyName))and(substringof('Leb',customer/contactName))and(substringof('Nancy',employee/firstName))))&$expand=customer,employee,employee/reportsTo</a></li>
+												<li><a
+														href="../odata2sparql/2.0/NW/Order()?$select=orderDate,shipCity&$filter=((orderDate%20ne%20datetime%272015-12-20T00:00:00%27)and(substringof(%27London%27,shipCity)))">Test1a</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer">/Customer</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer()?$top=3">/Customer()?$top=3</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer()/$count">/Customer()/$count</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Product">/Product</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD%3ACustomer-FOLIG')">/Customer('NWD%3ACustomer-FOLIG')</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer()?$select=address">/Customer()?$select=address</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/address">/Customer('NWD:Customer-GREAL')/address</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/address/$value">/Customer('NWD:Customer-GREAL')/address/$value</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=address">/Customer('NWD:Customer-GREAL')?$select=address</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/hasPlacedOrder/$count">/Customer('NWD:Customer-GREAL')/hasPlacedOrder/$count</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/hasPlacedOrder">/Customer('NWD:Customer-GREAL')/hasPlacedOrder</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/Resource_type">/Customer('NWD:Customer-GREAL')/Resource_type</a></li>
+												<li><a
+														href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=address,hasPlacedOrder/shipAddress&$filter=substringof('2732',hasPlacedOrder/shipAddress)">/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=address,hasPlacedOrder/shipAddress&$filter=substringof('2732',hasPlacedOrder/shipAddress)</a></li>
+												<li><a
+														href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=address,hasPlacedOrder/shipAddress&$filter=substringof('2732',address)">/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=address,hasPlacedOrder/shipAddress&$filter=substringof('2732',address)</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer()?$expand=hasPlacedOrder">/Customer()?$expand=hasPlacedOrder</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order()?$top=3">/Order()?$top=3</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10528')">/Order('NWD:Order-10528')</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10528')?$expand=customer">/Order('NWD:Order-10528')?$expand=customer</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10528')?$select=customer">/Order('NWD:Order-10528')?$select=customer***should
+																be an error because cannot select that which is not expanded***</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10528')?$expand=customer,hasOrderDetail">/Order('NWD:Order-10528')?$expand=customer,hasOrderDetail</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10249')?$expand=employee">/Order('NWD:Order-10528')?$expand=employee</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10249')?$expand=employee/reportsTo">/Order('NWD:Order-10528')?$expand=employee/reportsTo</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10249')?$expand=shipVia">/Order('NWD:Order-10528')?$expand=shipVia</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10249')?$expand=shipVia,employee/reportsTo">/Order('NWD:Order-10528')?$expand=shipVia,employee/reportsTo</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10249')?$expand=employee/reportsTo/reportsTo">/Order('NWD:Order-10528')?$expand=employee/reportsTo/reportsTo</a></li>
+												<li><a
+														href="../odata2sparql/2.0/NW/Order('NWD:Order-10249')?$expand=employee/reportsTo&$filter=substringof('Buchana',employee/reportsTo/lastName)">/Order('NWD:Order-10528')?$expand=employee/reportsTo&$filter=substringof('Buchana',employee/reportsTo/lastName)</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Employee('NWD:Employee-5')">/Employee('NWD:Employee-5')</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order()?$expand=customer">/Order()?$expand=customer</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10528')/customer">/Order('NWD:Order-10528')/customer</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Product('NWD:Product-38')">/Product('NWD:Product-38')</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Product('NWD:Product-38')/category">/Product('NWD:Product-38')/category</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Product('NWD:Product-38')/rdfs_type">/Product('NWD:Product-38')/rdfs_type</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Product('NWD:Product-38')/isPartOfOrderDetail">/Product('NWD:Product-38')/isPartOfOrderDetail</a></li>
+												<li><a href="../odata2sparql/2.0/NW/OrderDetail('NWD:OrderDetail-628')">/OrderDetail('OrderDetail-628')</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=*">/Customer('NWD:Customer-GREAL')?$select=*</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=hasPlacedOrder">/Customer('NWD:Customer-GREAL')?$select=hasPlacedOrder***should
+																throw an error as select is not in expand***</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=hasPlacedOrder&$expand=hasPlacedOrder">/Customer('NWD:Customer-GREAL')?$select=hasPlacedOrder&$expand=hasPlacedOrder</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=hasPlacedOrder/shipCity">/Customer('NWD:Customer-GREAL')?$select=hasPlacedOrder/shipCity***should
+																throw an error as select is not in expand***</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=address,contactTitle">/Customer('NWD:Customer-GREAL')?$select=address,contactTitle</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=address,*">/Customer('NWD:Customer-GREAL')?$select=address,*</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=address,hasPlacedOrder">/Customer('NWD:Customer-GREAL')?$select=address,hasPlacedOrder***should
+																throw an error as select is not in expand***</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$filter=substringof('RES',companyName)">/Customer('NWD:Customer-GREAL')?$filter=substringof('RES',companyName))***No
+																data expected***</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$filter=substringof('REA',companyName)">/Customer('NWD:Customer-GREAL')?$filter=substringof('REA',companyName))</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer()?$filter=substringof('France',companyName)">/Customer()?$filter=substringof('France',companyName))</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer()?$filter=hasPlacedOrder/all(d:d/freight gt 10)">/Customer()?$filter=hasPlacedOrder/all(d:d/freight
+																gt 10)***ERROR***</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Product('NWD:Product-55')">/Product('NWD:Product-55')</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Product('NWD:Product-55')/$count">/Product('NWD:Product-55')/$count</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Product('NWD:Product-XX')/$count">/Product('NWD:Product-XX')/$count</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Category('NWD:Category-1')/$links/isCategoryOf">/Category('NWD:Category-1')/$links/isCategoryOf</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Category('NWD:Category-1')/$links/isCategoryOf/$count">/Category('NWD:Category-1')/$links/isCategoryOf/$count</a></li>
+										</ol>
+								</li>
+								<li>NW Operation queries
+										<ol>
+												<li><a href="../odata2sparql/2.0/NW/Summary_of_Sales_by_Years()">/Summary_of_Sales_by_Years()</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Summary_of_Sales_by_Years()?Summary_of_Sales_by_Years_wildcard='33'">/Summary_of_Sales_by_Years()?Summary_of_Sales_by_Years_wildcard='33'</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Summary_of_Sales_by_Years()?Summary_of_Sales_by_Years_wildcard='33'&$top=3">/Summary_of_Sales_by_Years()?Summary_of_Sales_by_Years_wildcard='33'&$top=3</a></li>
+												<li><a href="../odata2sparql/2.0/NW/OrderSummary()">/OrderSummary()</a></li>
+												<li><a href="../odata2sparql/2.0/NW/OrderSummary()?$top=3">/OrderSummary()?$top=3</a></li>
+												<li><a href="../odata2sparql/2.0/NW/OrderSummary()/$count">/OrderSummary()/$count***INCORRECT****</a></li>
+												<li><a href="../odata2sparql/2.0/NW/OrderSummary(prod='NWD%3AProduct-60',order='NWD%3AOrder-10384')">/OrderSummary(prod='NWD:Product-60',order='NWD:Order-10384')</a></li>
+												<li><a href="../odata2sparql/2.0/NW/OrderSummary(prod='NWD%3AProduct-60',order='NWD%3AOrder-10384')/orderSummary_order">/OrderSummary(prod='NWD:Product-60',order='NWD:Order-10384')/orderSummary_order</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10528')/order_orderSummary">/Order('NWD:Order-10528')/order_orderSummary</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10528')?$expand=order_orderSummary">/Order('NWD:Order-10528')?$expand=order_orderSummary</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order()?$expand=order_orderSummary,order_orderSummary/orderSummary_product&$top=2">/Order('NWD:Order-10528')?$expand=order_orderSummary,order_orderSummary/orderSummary_product&$top=2</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10528')?$expand=order_orderSummary/orderSummary_product">/Order('NWD:Order-10528')?$expand=order_orderSummary/orderSummary_product</a></li>
+												<li><a
+														href="../odata2sparql/2.0/NW/Order('NWD:Order-10528')?&$expand=Order_Summary_of_Sales_by_Years&$select=Order_Summary_of_Sales_by_Years&Summary_of_Sales_by_Years_wildcard='33'">/Order('NWD:Order-10528')?&$expand=Order_Summary_of_Sales_by_Years&$select=Order_Summary_of_Sales_by_Years&Summary_of_Sales_by_Years_wildcard='33'</a></li>
+												<li><a
+														href="../odata2sparql/2.0/NW/Order()?&$expand=Order_Summary_of_Sales_by_Years&$select=Order_Summary_of_Sales_by_Years&$top=1&wildcard='33'">/Order()?&$expand=Order_Summary_of_Sales_by_Years&$select=Order_Summary_of_Sales_by_Years&$top=1&wildcard='33'***********error</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Order()?&$expand=Order_Summary_of_Sales_by_Years&$top=1&wildcard='.'">/Order()?&$expand=Order_Summary_of_Sales_by_Years&$top=1&wildcard='.'***********error</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Product('NWD:Product-38')/product_orderSummary">/Product('NWD:Product-38')/product_orderSummary</a></li>
+												<li><a href="../odata2sparql/2.0/NW/OrderSummary(prod='NWD%3AProduct-58',order='NWD%3AOrder-10863')">/OrderSummary(prod='NWD%3AProduct-58',order='NWD%3AOrder-10863')</a></li>
+												<li><a href="../odata2sparql/2.0/NW/OrderSummary(prod='NWD%3AProduct-58',order='NWD%3AOrder-10863')/orderSummary_product">/OrderSummary(prod='NWD%3AProduct-58',order='NWD%3AOrder-10863')/orderSummary_product</a></li>
+												<li><a href="../odata2sparql/2.0/NW/OrderSummary(prod='NWD%3AProduct-58',order='NWD%3AOrder-10863')/orderSummary_order">/OrderSummary(prod='NWD%3AProduct-58',order='NWD%3AOrder-10863')/orderSummary_order</a></li>
+										</ol>
+								</li>
+								<li>NW Sample Insert/Update/Deletes
+										<ol>
+												<li>
+														<button type="submit" onclick="postData(&quot;/Customer&quot;,data1, &quot;application/xml&quot; )">POST 2.0/NW/Customer ->
+																Customer('NWD:Customer-TEST1').</button>
+												</li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD%3ACustomer-TEST1')">/Customer('NWD:Customer-TEST1')</a></li>
+												<li>
+														<button type="submit" onclick="putData(&quot;/Customer('NWD%3ACustomer-TEST1')&quot;,data2, &quot;application/xml&quot; )">POST
+																2.0/NW/Customer('NWD:Customer-TEST1') -> (new phone and fax numbers) .</button>
+												</li>
+												<li>
+														<button type="submit"
+																onclick="putData(&quot;/Customer('NWD%3ACustomer-TEST1')/address/$value&quot;,&quot;2733 Baker Blvd. &quot;, &quot;text/plain&quot; )">PUT
+																2.0/NW/Customer('NWD%3ACustomer-TEST1')/address/$value -> 2733 Baker Blvd.</button>
+												</li>
+												<li>
+														<button type="submit" onclick="deleteData(&quot;/Customer('NWD%3ACustomer-TEST1')/address/$value&quot;)">DELETE
+																2.0/NW/Customer('NWD%3ACustomer-TEST1')/address/$value</button>
+												</li>
+												<li>
+														<button type="submit" onclick="deleteData(&quot;/Customer('NWD%3ACustomer-TEST1')&quot;)">DELETE
+																2.0/NW/Customer('NWD%3ACustomer-TEST1')</button>
+												</li>
+										</ol>
+								</li>
+						</ol>
+				</li>
+				</ul>
+				<h2>Other links</h2>
+				<ul>
+						<li>
+								<div>
+										<ol>
+												<li>Meta data (for comparison)
+														<ol>
+																<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc">Link to Northwind V2 Service Root</a></li>
+																<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/$metadata">Linkto Northwind V2 Service Metadata</a></li>
+														</ol>
+												</li>
+										</ol>
+								</div>
+								<div>
+										<ol>
+												<li>Sample Queries (for comparison)
+														<ol>
+																<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('ALFKI')?$expand=Orders">/Customers('ALFKI')?$expand=Orders</a></li>
+																<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers()?$select=Address">/Customers()?$select=Address</a></li>
+																<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('ALFKI')/Address">/Customers('ALFKI')/Address</a></li>
+																<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('ALFKI')/Address/$value">/Customers('ALFKI')/Address/$value</a></li>
+																<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Categories(1)/$links/Products">/Categories(1)/$links/Products</a></li>
+														</ol>
+												</li>
+										</ol>
+								</div>
+								<div>
+										<ol>
+												<li>Olingo V4 service (not yet available)
+														<ol>
+																<li><a href="4.0/NW">Link to Northwind V4 Service Root - /4.0/NW</a></li>
+																<li><a href="4.0/NW/$metadata">Link to Northwind V4 Service Metadata - /4.0/NW/$metadata</a></li>
+														</ol>
+												</li>
+										</ol>
+								</div>
+						</li>
+		</ol>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+         or more contributor license agreements.  See the NOTICE file
+         distributed with this work for additional information
+         regarding copyright ownership.  The ASF licenses this file
+         to you under the Apache License, Version 2.0 (the
+         "License"); you may not use this file except in compliance
+         with the License.  You may obtain a copy of the License at
+  
+           http://www.apache.org/licenses/LICENSE-2.0
+  
+         Unless required by applicable law or agreed to in writing,
+         software distributed under the License is distributed on an
+         "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+         KIND, either express or implied.  See the License for the
+         specific language governing permissions and limitations
+         under the License.
+-->
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquery.form.js" type="text/javascript"></script>
+<script>
+var data1= '<?xml version="1.0" encoding="utf-8"?> <entry xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xml:base="http://localhost:8080/odata/sparql/2.0/POS/"><id>http://localhost:8080/odata/sparql/2.0/POS/Customer(&#x27;northwind%3ACustomer-TEST1&#x27;)</id><title type="text">Customer</title><updated>2014-08-30T08:20:42.349-04:00</updated><category term="northwind.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/><content type="application/xml"><m:properties><d:subject>northwind:Customer-TEST1</d:subject><d:label>TEST1</d:label><d:comment m:null="true"/><d:fax>11.22.33.44</d:fax><d:postalCode>12345</d:postalCode><d:city>Rock</d:city><d:contactName>John Doe</d:contactName><d:address>Littletown</d:address><d:contactTitle>Sales</d:contactTitle><d:region m:null="true"/><d:companyName>ACME</d:companyName><d:phone>11.22.33.55</d:phone><d:country>EU</d:country></m:properties></content></entry>'
+var data2= '<?xml version="1.0" encoding="utf-8"?> <entry xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xml:base="http://localhost:8080/odata/sparql/2.0/POS/"><id>http://localhost:8080/odata/sparql/2.0/POS/Customer(&#x27;northwind%3ACustomer-TEST1&#x27;)</id><title type="text">Customer</title><updated>2014-08-30T08:20:42.349-04:00</updated><category term="northwind.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/><content type="application/xml"><m:properties><d:subject>northwind:Customer-TEST1</d:subject><d:label>TEST1</d:label><d:comment m:null="true"/><d:fax>(new fax)</d:fax><d:postalCode>12345</d:postalCode><d:city>Rock</d:city><d:contactName>John Doe</d:contactName><d:address>Littletown</d:address><d:contactTitle>Sales</d:contactTitle><d:region m:null="true"/><d:companyName>ACME</d:companyName><d:phone>(new phone)</d:phone><d:country>EU</d:country></m:properties></content></entry>'
+</script>
+<script>
+
+function postData(operation, data,contentType){
+	$.ajax({type: 'POST', url: "sparql/2.0/POS" + operation, data: data, error: showErrorResponse, success: showResponse, contentType: contentType,async:false});
+};
+function putData(operation, data,contentType){
+	$.ajax({type: 'PUT', url: "sparql/2.0/POS" + operation, data: data, error: showErrorResponse,success: showResponse, contentType: contentType,async:false});
+};
+function deleteData(operation){
+	$.ajax({type: 'DELETE' ,url: "sparql/2.0/POS" +operation, error: showErrorResponse,success: showResponse,async:false});
+
+};
+function showResponse(responseText, textStatus, xhr, $form)  {
+	try{
+		alert('status: ' + textStatus + '\n\nresponseText: \n' + (new XMLSerializer()).serializeToString(responseText) );
+		}
+	catch(e){
+		alert('status: ' + textStatus + '\n\nresponseText: \n' + responseText ); 
+		}
+  
+};
+function showErrorResponse(jqXHR, textStatus, errorThrown)  {
+  alert('status: ' + textStatus + '\n\Error: \n' + errorThrown );
+};
+</script>
+</head>
+<body>
+	<h1>Olingo2SPARQL</h1>
+	<h2>ConceptStore Position V2</h2>
+	<ul><li>
+			<ul>
+				<li>Meta data
+					<ul>
+						<li><a href="sparql/2.0/POS">Link to Northwind V2 Service Root - /sparql/2.0/POS</a></li>
+						<li><a href="sparql/2.0/POS/$metadata">Link to Position	V2 Service Metadata - /sparql/2.0/POS/$metadata</a></li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<ul>
+				<li>RDF queries
+					<ul>
+					    <li><a href="sparql/2.0/POS/rdfs_Resource">/rdfs_Resource</a></li>
+						<li><a href="sparql/2.0/POS/rdfs_Resource()/$count">/rdfs_Resource()/$count</a></li>
+						<li><a href="sparql/2.0/POS/rdfs_Resource()?$filter=subject eq 'j4%3ATP5c0c1eecf555c8e8e7648b75213138faa0c03f18'">/rdfs_Resource()?$filter=subject eq 'j4%3ATP5c0c1eecf555c8e8e7648b75213138faa0c03f18'</a></li>
+						<li><a href="sparql/2.0/POS/rdfs_Resource('j4%3ATP5c0c1eecf555c8e8e7648b75213138faa0c03f18')">/rdfs_Resource('j4%3ATP5c0c1eecf555c8e8e7648b75213138faa0c03f18')</a></li>
+						<li><a href="sparql/2.0/POS/rdf_Statement">/rdf_Statement</a></li>
+						<li><a href="sparql/2.0/POS/rdf_Statement()?$select=predicate,object">/rdf_Statement()?$select=predicate,object</a></li>
+						<li><a href="sparql/2.0/POS/rdf_Statement()?$filter=substringof('SEVES',object)">/rdf_Statement()?$filter=substringof('SEVES',object)</a></li>
+						</ul>
+				</li>
+				<li>RDFS/OWL queries
+					<ul>
+						<li><a href="sparql/2.0/POS/Order()?$filter=subject eq 'Position:Order-10249' and (substringof('Fr',shipCountry) or substringof('Ge',shipCountry)) and shippedDate lt datetime'1998-01-01T00:00:00' and (Order_customer/subject eq 'Position:Customer-BONAP' or Order_customer/subject eq 'Position:Customer-ALFKI') and substringof('Bon', Order_customer/companyName) and substringof('Leb', Order_customer/contactName) and substringof('Nancy', Order_employee/firstName)&$top=10&$expand=Order_customer,Order_employee,Order_employee/Employee_reportsTo&$select=subject,shipCountry,shippedDate,Order_customer/subject,Order_customer/companyName,Order_customer/contactName,Order_employee/subject,Order_employee/firstName,Order_employee/Employee_reportsTo/lastName">Complex query</a></li>
+						<li><a href="sparql/2.0/POS/TechnicalPosition">/TechnicalPosition</a></li>
+					</ul>
+				</li>
+				<li>Operation queries
+					<ul>
+						<li><a	href="sparql/2.0/POS/OrderSummary()">/OrderSummary()</a></li>
+						<li><a	href="sparql/2.0/POS/OrderSummary()?$top=3">/OrderSummary()?$top=3</a></li>
+						<li><a	href="sparql/2.0/POS/OrderSummary()/$count">/OrderSummary()/$count</a></li>
+						<li><a href="sparql/2.0/POS/OrderSummary(product='Position%3AProduct-58',order='Position%3AOrder-10863')">/OrderSummary(product='Position%3AProduct-58',order='Position%3AOrder-10863')</a></li>
+						<li><a href="sparql/2.0/POS/OrderSummary(product='Position%3AProduct-58',order='Position%3AOrder-10863')/OrderSummary_product">/OrderSummary(product='Position%3AProduct-58',order='Position%3AOrder-10863')/OrderSummary_product</a></li>
+						<li><a href="sparql/2.0/POS/OrderSummary(product='Position%3AProduct-58',order='Position%3AOrder-10863')/OrderSummary_order">/OrderSummary(product='Position%3AProduct-58',order='Position%3AOrder-10863')/OrderSummary_order</a></li>
+					</ul>
+				</li>
+				<li>Sample Insert/Update/Deletes
+					<ul>
+						<li>
+							<button type="submit"
+								onclick="postData(&quot;/Customer&quot;,data1, &quot;application/xml&quot; )">POST
+								sparql/2.0/POS/Customer -> Customer('Position:Customer-TEST1').</button>
+						</li>
+						<li><a
+							href="sparql/2.0/POS/Customer('Position%3ACustomer-TEST1')">/Customer('Position:Customer-TEST1')</a></li>
+						<li>
+							<button type="submit"
+								onclick="putData(&quot;/Customer('Position%3ACustomer-TEST1')&quot;,data2, &quot;application/xml&quot; )">POST
+								sparql/2.0/POS/Customer('Position:Customer-TEST1') -> (new phone
+								and fax numbers) .</button>
+						</li>
+						<li>
+							<button type="submit"
+								onclick="putData(&quot;/Customer('Position%3ACustomer-TEST1')/address/$value&quot;,&quot;2733 Baker Blvd. &quot;, &quot;text/plain&quot; )">PUT
+								sparql/2.0/POS/Customer('Position%3ACustomer-TEST1')/address/$value
+								-> 2733 Baker Blvd.</button>
+						</li>
+						<li>
+							<button type="submit"
+								onclick="deleteData(&quot;/Customer('Position%3ACustomer-TEST1')/address/$value&quot;)">DELETE
+								sparql/2.0/POS/Customer('Position%3ACustomer-TEST1')/address/$value</button>
+						</li>
+						<li>
+							<button type="submit"
+								onclick="deleteData(&quot;/Customer('Position%3ACustomer-TEST1')&quot;)">DELETE
+								sparql/2.0/POS/Customer('Position%3ACustomer-TEST1')</button>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<h2>Other links</h2>
+	<ul><li>
+			<div>
+				<ul>
+					<li>Meta data (for comparison)
+						<ul>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc">Link
+									to Northwind V2 Service Root</a></li>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/$metadata">Link to
+									Northwind V2 Service Metadata</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<ul>
+
+					<li>Sample Queries (for comparison)
+						<ul>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('ALFKI')?$expand=Orders">/Customers('ALFKI')?$expand=Orders</a></li>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers()?$select=Address">/Customers()?$select=Address</a></li>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('ALFKI')/Address">/Customers('ALFKI')/Address</a></li>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('ALFKI')/Address/$value">/Customers('ALFKI')/Address/$value</a></li>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/Categories(1)/$links/Products">/Categories(1)/$links/Products</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<ul>
+					<li>Olingo V4 service (not yet available)
+						<ul>
+							<li><a href="sparql/4.0/POS">Link to Northwind V4 Service
+									Root - /sparql/4.0/POS</a></li>
+							<li><a href="sparql/4.0/POS/$metadata">Link to Northwind
+									V4 Service Metadata - /sparql/4.0/POS/$metadata</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+         or more contributor license agreements.  See the NOTICE file
+         distributed with this work for additional information
+         regarding copyright ownership.  The ASF licenses this file
+         to you under the Apache License, Version 2.0 (the
+         "License"); you may not use this file except in compliance
+         with the License.  You may obtain a copy of the License at
+  
+           http://www.apache.org/licenses/LICENSE-2.0
+  
+         Unless required by applicable law or agreed to in writing,
+         software distributed under the License is distributed on an
+         "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+         KIND, either express or implied.  See the License for the
+         specific language governing permissions and limitations
+         under the License.
+-->
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquery.form.js" type="text/javascript"></script>
+<script>
+var data1= '<?xml version="1.0" encoding="utf-8"?> <entry xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xml:base="http://localhost:8080/odata/sparql/2.0/NW/"><id>http://localhost:8080/odata/sparql/2.0/NW/Customers(&#x27;northwind%3ACustomer-TEST1&#x27;)</id><title type="text">Customer</title><updated>2014-08-30T08:20:42.349-04:00</updated><category term="northwind.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/><content type="application/xml"><m:properties><d:subject>northwind:Customer-TEST1</d:subject><d:label>TEST1</d:label><d:comment m:null="true"/><d:fax>11.22.33.44</d:fax><d:postalCode>12345</d:postalCode><d:city>Rock</d:city><d:contactName>John Doe</d:contactName><d:address>Littletown</d:address><d:contactTitle>Sales</d:contactTitle><d:region m:null="true"/><d:companyName>ACME</d:companyName><d:phone>11.22.33.55</d:phone><d:country>EU</d:country></m:properties></content></entry>'
+var data2= '<?xml version="1.0" encoding="utf-8"?> <entry xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xml:base="http://localhost:8080/odata/sparql/2.0/NW/"><id>http://localhost:8080/odata/sparql/2.0/NW/Customers(&#x27;northwind%3ACustomer-TEST1&#x27;)</id><title type="text">Customer</title><updated>2014-08-30T08:20:42.349-04:00</updated><category term="northwind.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/><content type="application/xml"><m:properties><d:subject>northwind:Customer-TEST1</d:subject><d:label>TEST1</d:label><d:comment m:null="true"/><d:fax>(new fax)</d:fax><d:postalCode>12345</d:postalCode><d:city>Rock</d:city><d:contactName>John Doe</d:contactName><d:address>Littletown</d:address><d:contactTitle>Sales</d:contactTitle><d:region m:null="true"/><d:companyName>ACME</d:companyName><d:phone>(new phone)</d:phone><d:country>EU</d:country></m:properties></content></entry>'
+</script>
+<script>
+
+function postData(operation, data,contentType){
+	$.ajax({type: 'POST', url: "sparql/2.0/NW" + operation, data: data, error: showErrorResponse, success: showResponse, contentType: contentType,async:false});
+};
+function putData(operation, data,contentType){
+	$.ajax({type: 'PUT', url: "sparql/2.0/NW" + operation, data: data, error: showErrorResponse,success: showResponse, contentType: contentType,async:false});
+};
+function deleteData(operation){
+	$.ajax({type: 'DELETE' ,url: "sparql/2.0/NW" +operation, error: showErrorResponse,success: showResponse,async:false});
+
+};
+function showResponse(responseText, textStatus, xhr, $form)  {
+	try{
+		alert('status: ' + textStatus + '\n\nresponseText: \n' + (new XMLSerializer()).serializeToString(responseText) );
+		}
+	catch(e){
+		alert('status: ' + textStatus + '\n\nresponseText: \n' + responseText ); 
+		}
+  
+};
+function showErrorResponse(jqXHR, textStatus, errorThrown)  {
+  alert('status: ' + textStatus + '\n\Error: \n' + errorThrown );
+};
+</script>
+</head>
+<body>
+	<h1>Olingo2SPARQL</h1>
+	<h2>Odata.org Northwind V2</h2>
+	<ul><li>
+			<ul>
+				<li>Meta data
+					<ul>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/">Link to Northwind V2 Service Root</li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/$metadata">$metadata</a></li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<ul>
+				<li>RDFS/OWL queries
+					<ul>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Orders()
+?$filter=OrderID eq 10340 and (substringof('Fr',ShipCountry) or substringof('Ge',ShipCountry)) and ShippedDate lt datetime'1998-01-01T00:00:00' and (Customer/CustomerID eq 'BONAP' or Customer/CustomerID eq 'ALFKI') and substringof('Bon',Customer/CompanyName) and substringof('Leb',Customer/ContactName) and substringof('Nancy',Employee/FirstName)
+&$top=10
+&$expand=Customer,Employee,Employee/Employee1
+&$select=OrderID,ShipCountry,ShippedDate,Customer/CustomerID,Customer/CompanyName,Customer/ContactName,Employee/EmployeeID,Employee/FirstName,Employee/Employee1/LastName
+">Complex query</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers">/Customers</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers()?$top=3">/Customers()?$top=3</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers()/$count">/Customers()/$count</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Products">/Products</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('FOLIG')">/Customers('FOLIG')</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers()?$select=Address">/Customers()?$select=Address</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')/Address">/Customers('GREAL')/Address</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')/Address/$value">/Customers('GREAL')/Address/$value</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')?$select=Address">/Customers('GREAL')?$select=Address</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')/Orders">/Customers('GREAL')/Orders</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')/Resource_type">/Customers('GREAL')/Resource_type????</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')?$expand=Orders&$select=Address,Orders/ShipAddress&$filter=substringof('2732',Orders/ShipAddress)">/Customers('GREAL')?$expand=Orders&$select=Address,Orders/ShipAddress&$filter=substringof('2732',Orders/ShipAddress)????</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')?$expand=Orders&$select=Address,Orders/ShipAddress&$filter=substringof('2732',Address)">/Customers('GREAL')?$expand=Orders&$select=Address,Orders/ShipAddress&$filter=substringof('2732',Address)</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers()?$expand=Orders">/Customers()?$expand=Orders</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Orders()?$top=3">/Orders()?$top=3</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Orders(10528)">/Orders(10528)</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Orders(10528)?$expand=Customer">/Orders(10528)?$expand=Customer</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Orders(10528)?$expand=Customer,Order_Details">/Orders(10528)?$expand=Customer,Order_Details</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Orders(10249)?$expand=Employee">/Orders(10528)?$expand=Employee</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Orders(10249)?$expand=Employee/Employee1">/Orders(10528)?$expand=Employee/Employee1</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Orders(10249)?$expand=Employee/Employee1&$filter=substringof('Buchana',Employee/Employee1/LastName)">/Orders(10528)?$expand=Employee/Employee1&$filter=substringof('Buchana',Employee/Employee1/LastName)</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Employees(5)">/Employees(5)</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Orders()?$expand=Customer">/Orders()?$expand=Customer</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Orders(10528)/Customer">/Orders(10528)/Customer</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Products(38)">/Products(38)</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Products(38)/Category">/Products(38)/Category</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Products(38)/Resource_type">/Products(38)/Resource_type???</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Products(38)/Order_Details">/Products(38)/Order_Detail</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/OrderDetail(3161)">/OrderDetail(3161)??</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')?$select=*">/Customers('GREAL')?$select=*</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')?$select=Orders">/Customers('GREAL')?$select=Orders</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')?$select=Address,ContactTitle">/Customers('GREAL')?$select=Address,ContactTitle</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')?$select=Address,*">/Customers('GREAL')?$select=Address,*</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')?$select=Address,Orders">/Customers('GREAL')?$select=Address,Orders</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('GREAL')?$filter=substringof('RES',CompanyName)">/Customers('GREAL')?$filter=substringof('RES',CompanyName))???</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers()?$filter=substringof('France',CompanyName)">/Customers()?$filter=substringof('France',CompanyName))</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers()?$filter=hasPlacedOrder/all(d:d/freight gt 10)">/Customers()?$filter=hasPlacedOrder/all(d:d/freight
+								gt 10)***ERROR***</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/Products(55)">/Products(55)</a></li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Products(55)/$count">/Products(55)/$count???</a></li>
+
+					</ul>
+				</li>
+				<li>Operation queries
+					<ul>
+						<li><a	href="http://services.odata.org/V2/Northwind/Northwind.svc/OrderSummary()">/OrderSummary()</a></li>
+						<li><a	href="http://services.odata.org/V2/Northwind/Northwind.svc/OrderSummary()?$top=3">/OrderSummary()?$top=3</a></li>
+						<li><a	href="http://services.odata.org/V2/Northwind/Northwind.svc/OrderSummary()/$count">/OrderSummary()/$count</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/OrderSummary(product='northwind%3AProduct-58',order='northwind%3AOrder-10863')">/OrderSummary(product='northwind%3AProduct-58',order='northwind%3AOrder-10863')</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/OrderSummary(product='northwind%3AProduct-58',order='northwind%3AOrder-10863')/OrderSummary_product">/OrderSummary(product='northwind%3AProduct-58',order='northwind%3AOrder-10863')/OrderSummary_product</a></li>
+						<li><a href="http://services.odata.org/V2/Northwind/Northwind.svc/OrderSummary(product='northwind%3AProduct-58',order='northwind%3AOrder-10863')/OrderSummary_order">/OrderSummary(product='northwind%3AProduct-58',order='northwind%3AOrder-10863')/OrderSummary_order</a></li>
+					</ul>
+				</li>
+				<li>Sample Insert/Update/Deletes
+					<ul>
+						<li>
+							<button type="submit"
+								onclick="postData(&quot;/Customer&quot;,data1, &quot;application/xml&quot; )">POST
+								http://services.odata.org/V2/Northwind/Northwind.svc/Customer -> Customers('northwind:Customer-TEST1').</button>
+						</li>
+						<li><a
+							href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('northwind%3ACustomer-TEST1')">/Customers('northwind:Customer-TEST1')</a></li>
+						<li>
+							<button type="submit"
+								onclick="putData(&quot;/Customers('northwind%3ACustomer-TEST1')&quot;,data2, &quot;application/xml&quot; )">POST
+								http://services.odata.org/V2/Northwind/Northwind.svc/Customers('northwind:Customer-TEST1') -> (new phone
+								and fax numbers) .</button>
+						</li>
+						<li>
+							<button type="submit"
+								onclick="putData(&quot;/Customers('northwind%3ACustomer-TEST1')/address/$value&quot;,&quot;2733 Baker Blvd. &quot;, &quot;text/plain&quot; )">PUT
+								http://services.odata.org/V2/Northwind/Northwind.svc/Customers('northwind%3ACustomer-TEST1')/address/$value
+								-> 2733 Baker Blvd.</button>
+						</li>
+						<li>
+							<button type="submit"
+								onclick="deleteData(&quot;/Customers('northwind%3ACustomer-TEST1')/address/$value&quot;)">DELETE
+								http://services.odata.org/V2/Northwind/Northwind.svc/Customers('northwind%3ACustomer-TEST1')/address/$value</button>
+						</li>
+						<li>
+							<button type="submit"
+								onclick="deleteData(&quot;/Customers('northwind%3ACustomer-TEST1')&quot;)">DELETE
+								http://services.odata.org/V2/Northwind/Northwind.svc/Customers('northwind%3ACustomer-TEST1')</button>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<h2>Other links</h2>
+	<ul><li>
+			<div>
+				<ul>
+					<li>Meta data (for comparison)
+						<ul>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc">Link
+									to Northwind V2 Service Root</a></li>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/$metadata">Linkto
+									Northwind V2 Service Metadata</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<ul>
+
+					<li>Sample Queries (for comparison)
+						<ul>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('ALFKI')?$expand=Orders">/Customers('ALFKI')?$expand=Orders</a></li>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers()?$select=Address">/Customers()?$select=Address</a></li>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('ALFKI')/Address">/Customers('ALFKI')/Address</a></li>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/Customers('ALFKI')/Address/$value">/Customers('ALFKI')/Address/$value</a></li>
+							<li><a
+								href="http://services.odata.org/V2/Northwind/Northwind.svc/Categories(1)/$links/Products">/Categories(1)/$links/Products</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<ul>
+					<li>Olingo V4 service (not yet available)
+						<ul>
+							<li><a href="sparql/4.0/NW">Link to Northwind V4 Service
+									Root - /sparql/4.0/NW</a></li>
+							<li><a href="sparql/4.0/NW/$metadata">Link to Northwind
+									V4 Service Metadata - /sparql/4.0/NW/$metadata</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<ul>
+					<li>Kennedy service
+						<ul>
+							<li><a href="sparql/2.0/Kennedy">Link to Kennedy V2
+									Service Root</a></li>
+							<li><a href="sparql/2.0/kennedy/$metadata">Link to
+									Kennedy V2 Service Metadata</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+</body>
+</html>

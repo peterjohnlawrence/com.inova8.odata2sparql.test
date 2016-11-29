@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<title>olingo2sparql tests</title>
+
+<script id="sap-ui-bootstrap" type="text/javascript"
+	src="openui5/sap-ui-core.js" data-sap-ui-theme="sap_bluecrystal"
+	data-sap-ui-noConflict="true">	
+</script>
+
+<link rel="stylesheet" href="openui5/sap/ui/thirdparty/qunit.css"
+	type="text/css" media="screen" />
+
+<script type="text/javascript" src="openui5/sap/ui/thirdparty/qunit.js"></script>
+<script type="text/javascript" src="openui5/sap/ui/qunit/qunit-junit.js"></script>
+<script type="text/javascript" src="openui5/sap/ui/qunit/QUnitUtils.js"></script>
+<!-- <script type="text/javascript" src="resources/jquery.js" ></script> -->
+<!-- <script type="text/javascript" src="resources/jquery.rdfquery.core.min-1.0.js"></script> -->
+<script>
+function sanitizeURLasFilename(url){
+	return url.replace("?","/");
+};
+
+function getTest(URL,type) {
+	var expectedResults="";
+	var fileName = sanitizeURLasFilename("qunitresults/"+ URL+".txt");
+
+	jQuery.ajax({
+		type : "GET",
+		url :fileName,
+
+		async : true,
+		success: function (data){
+                expectedResults = data;
+            },
+		error: function (data){
+                expectedResults = "Failed to read file: "+fileName;
+            }
+	});
+
+	var xhr = jQuery.ajax({
+		type : 'GET',
+		url : URL
+	}).always(function(data, status) {
+		var results;
+		switch (type){
+		case "text":  results = data.toString(); break;
+		case "xml":  results = (new XMLSerializer()).serializeToString(data);  break;
+		default: break;
+		}
+		assert.equal(results, expectedResults, URL);
+		start();
+	});
+};
+QUnit.module("olingo2sparql");
+
+QUnit.asyncTest('Metadata tests', function() {
+	expect(2); 
+	getTest('sparql/2.0/NW',  "xml");
+	getTest('sparql/2.0/NW/$metadata',  "xml");
+});
+
+QUnit.asyncTest('EntitySet tests', function() {
+	expect(1); 
+	//getTest('sparql/2.0/NW/Customer()?$top=3',"xml");
+	getTest('sparql/2.0/NW/Customer()/$count',"text");
+});
+QUnit.asyncTest('Query tests', function() {
+	expect(1); 
+	getTest("sparql/2.0/NW/Order()?$filter=OrderID eq 10340 and (substringof('Fr',ShipCountry) or substringof('Ge',ShipCountry)) and ShippedDate lt datetime'1998-01-01T00:00:00' and (Customer/CustomerID eq 'BONAP' or Customer/CustomerID eq 'ALFKI') and substringof('Bon',Customer/CompanyName) and substringof('Leb',Customer/ContactName) and substringof('Nancy',Employee/FirstName)&$top=10&$expand=Customer,Employee,Employee/Employee1&$select=OrderID,ShipCountry,ShippedDate,Customer/CustomerID,Customer/CompanyName,Customer/ContactName,Employee/EmployeeID,Employee/FirstName,Employee/Employee1/LastName","xml");
+});
+</script>
+</head>
+<body>
+
+	<div id="qunit"></div>
+
+</body>
+</html>
