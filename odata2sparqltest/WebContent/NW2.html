@@ -21,11 +21,13 @@
 <head>
 <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="resources/jquery.js" type="text/javascript"></script>
+<script src="resources/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script src="resources/jquery.form.js" type="text/javascript"></script>
 <script>
-var data1= '<?xml version="1.0" encoding="utf-8"?> <entry xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xml:base="http://localhost:8080/odata/2.0/NW/"><id>http://localhost:8080/odata/2.0/NW/Customer(&#x27;NWD%3ACustomer-TEST1&#x27;)</id><title type="text">Customer</title><updated>2014-08-30T08:20:42.349-04:00</updated><category term="northwind.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/><content type="application/xml"><m:properties><d:subjectId>NWD:Customer-TEST1</d:subjectId><d:label>TEST1</d:label><d:comment m:null="true"/><d:fax>11.22.33.44</d:fax><d:postalCode>12345</d:postalCode><d:city>Rock</d:city><d:contactName>John Doe</d:contactName><d:address>Littletown</d:address><d:contactTitle>Sales</d:contactTitle><d:region m:null="true"/><d:companyName>ACME</d:companyName><d:phone>11.22.33.55</d:phone><d:country>EU</d:country></m:properties></content></entry>'
-var data2= '<?xml version="1.0" encoding="utf-8"?> <entry xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xml:base="http://localhost:8080/odata/2.0/NW/"><id>http://localhost:8080/odata/2.0/NW/Customer(&#x27;NWD%3ACustomer-TEST1&#x27;)</id><title type="text">Customer</title><updated>2014-08-30T08:20:42.349-04:00</updated><category term="northwind.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/><content type="application/xml"><m:properties><d:subjectId>NWD:Customer-TEST1</d:subjectId><d:label>TEST1</d:label><d:comment m:null="true"/><d:fax>(new fax)</d:fax><d:postalCode>12345</d:postalCode><d:city>Rock</d:city><d:contactName>John Doe</d:contactName><d:address>Littletown</d:address><d:contactTitle>Sales</d:contactTitle><d:region m:null="true"/><d:companyName>ACME</d:companyName><d:phone>(new phone)</d:phone><d:country>EU</d:country></m:properties></content></entry>'
+var data1= '<?xml version="1.0" encoding="utf-8"?> <entry xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xml:base="http://localhost:8080/odata2sparql/2.0/NW/"><id>http://localhost:8080/odata2sparql/2.0/NW/Customer(&#x27;NWD%3ACustomer-TEST1&#x27;)</id><title type="text">Customer</title><updated>2014-08-30T08:20:42.349-04:00</updated><category term="northwind.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/><content type="application/xml"><m:properties><d:subjectId>NWD:Customer-TEST1</d:subjectId><d:label>TEST1</d:label><d:comment m:null="true"/><d:customerFax>11.22.33.44</d:customerFax><d:customerPostalCode>12345</d:customerPostalCode><d:customerCity>Rock</d:customerCity><d:customerContactName>John Doe</d:customerContactName><d:customerAddress>Littletown</d:customerAddress><d:customerContactTitle>Sales</d:customerContactTitle><d:customerCompanyName>ACME</d:customerCompanyName><d:customerPhone>11.22.33.55</d:customerPhone><d:customerCountry>EU</d:customerCountry></m:properties></content></entry>'
+var data2= '<?xml version="1.0" encoding="utf-8"?> <entry xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xml:base="http://localhost:8080/odata2sparql/2.0/NW/"><id>http://localhost:8080/odata2sparql/2.0/NW/Customer(&#x27;NWD%3ACustomer-TEST1&#x27;)</id><title type="text">Customer</title><updated>2014-08-30T08:20:42.349-04:00</updated><category term="northwind.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/><content type="application/xml"><m:properties><d:subjectId>NWD:Customer-TEST1</d:subjectId><d:label>TEST1</d:label><d:comment m:null="true"/><d:customerFax>(new fax)</d:customerFax><d:customerPostalCode>12345</d:customerPostalCode><d:customerCity>Rock</d:customerCity><d:customerContactName>John Doe</d:customerContactName><d:customerAddress>Littletown</d:customerAddress><d:customerContactTitle>Sales</d:customerContactTitle><d:customerCompanyName>ACME</d:customerCompanyName><d:customerPhone>(new phone)</d:customerPhone><d:customerCountry>EU</d:customerCountry></m:properties></content></entry>'
+var customer_order_data1= '<?xml version="1.0" encoding="utf-8"?><entry xmlns="http://www.w3.org/2005/Atom"	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"	xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"	xml:base="http://localhost:8080/odata2sparql/2.0/NW/">	<id>http://localhost:8080/odata2sparql/2.0/NW/Customer_Order(customer=&#x27;http%3A%2F%2Fnorthwind.com%2FCustomer-ALFKI&#x27;,order=&#x27;http%3A%2F%2Fnorthwind.com%2FOrder-NEW&#x27;)	</id>	<title type="text">Customer_Order</title>	<updated>2014-08-30T08:20:42.349-04:00</updated>	<category term="northwind.Customer_Order"		scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />	<content type="application/xml">		<m:properties>			<d:customer_Order_customerCompanyName>Alfreds Futterkiste</d:customer_Order_customerCompanyName>			<d:customer_Order_shipCity>Berlin</d:customer_Order_shipCity>			<d:customer_Order_customerCity>Berlin</d:customer_Order_customerCity>			<d:customer>http://northwind.com/Customer-ALFKI</d:customer>			<d:order>http://northwind.com/Order-NEW</d:order>		</m:properties>	</content></entry>'
+var customer_order_data2= '<?xml version="1.0" encoding="utf-8"?><entry xmlns="http://www.w3.org/2005/Atom"	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"	xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"	xml:base="http://localhost:8080/odata2sparql/2.0/NW/">	<id>http://localhost:8080/odata2sparql/2.0/NW/Customer_Order(customer=&#x27;http%3A%2F%2Fnorthwind.com%2FCustomer-ALFKI&#x27;,order=&#x27;http%3A%2F%2Fnorthwind.com%2FOrder-NEW&#x27;)	</id>	<title type="text">Customer_Order</title>	<updated>2014-08-30T08:20:42.349-04:00</updated>	<category term="northwind.Customer_Order"		scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />	<content type="application/xml">		<m:properties>			<d:customer_Order_customerCompanyName>(new customerCompanyName)</d:customer_Order_customerCompanyName>			<d:customer_Order_shipCity>(new shipCity)</d:customer_Order_shipCity>			<d:customer_Order_customerCity>Berlin</d:customer_Order_customerCity>			<d:customer>http://northwind.com/Customer-ALFKI</d:customer>			<d:order>http://northwind.com/Order-NEW</d:order>		</m:properties>	</content></entry>'
 </script>
 <script>
 
@@ -94,7 +96,7 @@ function showErrorResponse(jqXHR, textStatus, errorThrown)  {
 										<ol>
 												<li><a href="../odata2sparql/2.0/NW/rdfs_Resource">/rdfs_Resource</a></li>
 												<li><a href="../odata2sparql/2.0/NW/rdfs_Resource()/$count">/rdfs_Resource()/$count</a></li>
-												<li><a href="../odata2sparql/2.0/NW/rdfs_Resource()?$filter=subject eq 'NWD:Customer-SEVES'">/rdfs_Resource()?$filter=subject eq
+												<li><a href="../odata2sparql/2.0/NW/rdfs_Resource()?$filter=subjectId eq 'NWD:Customer-SEVES'">/rdfs_Resource()?$filter=subjectId eq
 																'NWD:Customer-SEVES'</a></li>
 												<li><a href="../odata2sparql/2.0/NW/rdfs_Resource('NWD:Customer-SEVES')">/rdfs_Resource('northwind:Customer-SEVES')</a></li>
 												<li><a href="../odata2sparql/2.0/NW/owl_Thing">/owl_Thing</a></li>
@@ -103,8 +105,8 @@ function showErrorResponse(jqXHR, textStatus, errorThrown)  {
 																'NWD:Customer-SEVES'</a></li>
 												<li><a href="../odata2sparql/2.0/NW/owl_Thing('NWD:Customer-SEVES')">/owl_Thing('northwind:Customer-SEVES')</a></li>
 												<li><a href="../odata2sparql/2.0/NW/rdf_Statement">/rdf_Statement</a></li>
-												<li><a href="../odata2sparql/2.0/NW/rdf_Statement()?$select=predicate,object">/rdf_Statement()?$select=predicate,object</a></li>
-												<li><a href="../odata2sparql/2.0/NW/rdf_Statement()?$filter=substringof('SEVES',objectId)">/rdf_Statement()?$filter=substringof('SEVES',object)</a></li>
+												<li><a href="../odata2sparql/2.0/NW/rdf_Statement()?$select=rdf_predicate,rdf_object">/rdf_Statement()?$select=rdf_predicate,rdf_object</a></li>
+												<li><a href="../odata2sparql/2.0/NW/rdf_Statement()?$filter=substringof('SEVES',rdf_object)">/rdf_Statement()?$filter=substringof('SEVES',rdf_object)</a></li>
 										</ol>
 								</li>
 								<li>NW RDFS/OWL queries
@@ -118,17 +120,17 @@ function showErrorResponse(jqXHR, textStatus, errorThrown)  {
 												<li><a href="../odata2sparql/2.0/NW/Customer()/$count">/Customer()/$count</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Product">/Product</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Customer('NWD%3ACustomer-FOLIG')">/Customer('NWD%3ACustomer-FOLIG')</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer()?$select=address">/Customer()?$select=address</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/address">/Customer('NWD:Customer-GREAL')/address</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/address/$value">/Customer('NWD:Customer-GREAL')/address/$value</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=address">/Customer('NWD:Customer-GREAL')?$select=address</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer()?$select=customerAddress">/Customer()?$select=customerAddress</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/customerAddress">/Customer('NWD:Customer-GREAL')/customerAddress</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/customerAddress/$value">/Customer('NWD:Customer-GREAL')/customerAddress/$value</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=customerAddress">/Customer('NWD:Customer-GREAL')?$select=customerAddress</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/hasPlacedOrder/$count">/Customer('NWD:Customer-GREAL')/hasPlacedOrder/$count</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/hasPlacedOrder">/Customer('NWD:Customer-GREAL')/hasPlacedOrder</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/Resource_type">/Customer('NWD:Customer-GREAL')/Resource_type</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')/rdfs_type">/Customer('NWD:Customer-GREAL')/rdfs_type</a></li>
 												<li><a
-														href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=address,hasPlacedOrder/shipAddress&$filter=substringof('2732',hasPlacedOrder/shipAddress)">/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=address,hasPlacedOrder/shipAddress&$filter=substringof('2732',hasPlacedOrder/shipAddress)</a></li>
+														href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=customerAddress,hasPlacedOrder/shipAddress&$filter=substringof('2732',hasPlacedOrder/shipAddress)">/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=customerAddress,hasPlacedOrder/shipAddress&$filter=substringof('2732',hasPlacedOrder/shipAddress)</a></li>
 												<li><a
-														href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=address,hasPlacedOrder/shipAddress&$filter=substringof('2732',address)">/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=address,hasPlacedOrder/shipAddress&$filter=substringof('2732',address)</a></li>
+														href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=customerAddress,hasPlacedOrder/shipAddress&$filter=substringof('2732',customerAddress)">/Customer('NWD:Customer-GREAL')?$expand=hasPlacedOrder&$select=customerAddress,hasPlacedOrder/shipAddress&$filter=substringof('2732',customerAddress)</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Customer()?$expand=hasPlacedOrder">/Customer()?$expand=hasPlacedOrder</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Order()?$top=3">/Order()?$top=3</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Order('NWD:Order-10528')">/Order('NWD:Order-10528')</a></li>
@@ -157,14 +159,14 @@ function showErrorResponse(jqXHR, textStatus, errorThrown)  {
 												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=hasPlacedOrder&$expand=hasPlacedOrder">/Customer('NWD:Customer-GREAL')?$select=hasPlacedOrder&$expand=hasPlacedOrder</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=hasPlacedOrder/shipCity">/Customer('NWD:Customer-GREAL')?$select=hasPlacedOrder/shipCity***should
 																throw an error as select is not in expand***</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=address,contactTitle">/Customer('NWD:Customer-GREAL')?$select=address,contactTitle</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=address,*">/Customer('NWD:Customer-GREAL')?$select=address,*</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=address,hasPlacedOrder">/Customer('NWD:Customer-GREAL')?$select=address,hasPlacedOrder***should
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=customerAddress,customerContactTitle">/Customer('NWD:Customer-GREAL')?$select=customerAddress,customerContactTitle</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=customerAddress,*">/Customer('NWD:Customer-GREAL')?$select=customerAddress,*</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$select=customerAddress,hasPlacedOrder">/Customer('NWD:Customer-GREAL')?$select=customerAddress,hasPlacedOrder***should
 																throw an error as select is not in expand***</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$filter=substringof('RES',companyName)">/Customer('NWD:Customer-GREAL')?$filter=substringof('RES',companyName))***No
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$filter=substringof('RES',customerCompanyName)">/Customer('NWD:Customer-GREAL')?$filter=substringof('RES',customerCompanyName))***No
 																data expected***</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$filter=substringof('REA',companyName)">/Customer('NWD:Customer-GREAL')?$filter=substringof('REA',companyName))</a></li>
-												<li><a href="../odata2sparql/2.0/NW/Customer()?$filter=substringof('France',companyName)">/Customer()?$filter=substringof('France',companyName))</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer('NWD:Customer-GREAL')?$filter=substringof('REA',customerCompanyName)">/Customer('NWD:Customer-GREAL')?$filter=substringof('REA',customerCompanyName))</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer()?$filter=substringof('France',customerCompanyName)">/Customer()?$filter=substringof('France',customerCompanyName))</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Customer()?$filter=hasPlacedOrder/all(d:d/freight gt 10)">/Customer()?$filter=hasPlacedOrder/all(d:d/freight
 																gt 10)***ERROR***</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Product('NWD:Product-55')">/Product('NWD:Product-55')</a></li>
@@ -176,9 +178,12 @@ function showErrorResponse(jqXHR, textStatus, errorThrown)  {
 								</li>
 								<li>NW Operation queries
 										<ol>
+												<li><a href="../odata2sparql/2.0/NW/Customer_Order()?$top=5">/Customer_Order()?$top=5</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Customer_Order()?$filter=customer_Order_customerCity eq '(new customerCity)'">/Customer_Order()?$filter=customer_Order_customerCity eq '(new customerCity)'</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Summary_of_Sales_by_Years()">/Summary_of_Sales_by_Years()</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Summary_of_Sales_by_Years()?Summary_of_Sales_by_Years_wildcard='33'">/Summary_of_Sales_by_Years()?Summary_of_Sales_by_Years_wildcard='33'</a></li>
 												<li><a href="../odata2sparql/2.0/NW/Summary_of_Sales_by_Years()?Summary_of_Sales_by_Years_wildcard='33'&$top=3">/Summary_of_Sales_by_Years()?Summary_of_Sales_by_Years_wildcard='33'&$top=3</a></li>
+												<li><a href="../odata2sparql/2.0/NW/Summary_of_Sales_by_Years()?Summary_of_Sales_by_Years_wildcard='33'&$filter=Summary_of_Sales_by_Years_subTotal eq 48">/Summary_of_Sales_by_Years()?Summary_of_Sales_by_Years_wildcard='33'&$filter=Summary_of_Sales_by_Years_subTotal eq 48</li>												
 												<li><a href="../odata2sparql/2.0/NW/OrderSummary()">/OrderSummary()</a></li>
 												<li><a href="../odata2sparql/2.0/NW/OrderSummary()?$top=3">/OrderSummary()?$top=3</a></li>
 												<li><a href="../odata2sparql/2.0/NW/OrderSummary()/$count">/OrderSummary()/$count***INCORRECT****</a></li>
@@ -212,16 +217,42 @@ function showErrorResponse(jqXHR, textStatus, errorThrown)  {
 												</li>
 												<li>
 														<button type="submit"
-																onclick="putData(&quot;/Customer('NWD%3ACustomer-TEST1')/address/$value&quot;,&quot;2733 Baker Blvd. &quot;, &quot;text/plain&quot; )">PUT
-																2.0/NW/Customer('NWD%3ACustomer-TEST1')/address/$value -> 2733 Baker Blvd.</button>
+																onclick="putData(&quot;/Customer('NWD%3ACustomer-TEST1')/customerAddress/$value&quot;,&quot;2733 Baker Blvd. &quot;, &quot;text/plain&quot; )">PUT
+																2.0/NW/Customer('NWD%3ACustomer-TEST1')/customerAddress/$value -> 2733 Baker Blvd.</button>
 												</li>
 												<li>
-														<button type="submit" onclick="deleteData(&quot;/Customer('NWD%3ACustomer-TEST1')/address/$value&quot;)">DELETE
-																2.0/NW/Customer('NWD%3ACustomer-TEST1')/address/$value</button>
+														<button type="submit" onclick="deleteData(&quot;/Customer('NWD%3ACustomer-TEST1')/customerAddress/$value&quot;)">DELETE
+																2.0/NW/Customer('NWD%3ACustomer-TEST1')/customerAddress/$value</button>
 												</li>
 												<li>
 														<button type="submit" onclick="deleteData(&quot;/Customer('NWD%3ACustomer-TEST1')&quot;)">DELETE
 																2.0/NW/Customer('NWD%3ACustomer-TEST1')</button>
+												</li>
+										</ol>
+								</li>
+								<li>NW Operation Insert/Update/Deletes
+										<ol>
+												<li>
+														<button type="submit" onclick="postData(&quot;/Customer_Order&quot;,customer_order_data1, &quot;application/xml&quot; )">POST 2.0/NW/Customer_Order ->
+																Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder-NEW').</button>
+												</li>
+												<li><a href="../odata2sparql/2.0/NW/Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder-NEW')?$format=json">/Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder_NEW')</a></li>
+												<li>
+														<button type="submit" onclick="putData(&quot;/Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder-NEW')&quot;,customer_order_data2, &quot;application/xml&quot; )">POST
+																2.0/NW/Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder-NEW') -> (new customerName and shipCity) .</button>
+												</li>
+												<li>
+														<button type="submit"
+																onclick="putData(&quot;/Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder-NEW')/customer_Order_customerCity/$value&quot;,&quot;(new customerCity)&quot;, &quot;text/plain&quot; )">PUT
+																2.0/NW/Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder-NEW')/customer_Order_customerCity/$value -> (new customerCity)</button>
+												</li>
+												<li>
+														<button type="submit" onclick="deleteData(&quot;/Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder-NEW')/customer_Order_customerCity/$value&quot;)">DELETE
+																2.0/NW/Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder-NEW')/customer_Order_customerCity/$value*************</button>
+												</li>
+												<li>
+														<button type="submit" onclick="deleteData(&quot;/Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder-NEW')&quot;)">DELETE
+																2.0/NW/Customer_Order(customer='NWD%3ACustomer-ALFKI',order='NWD%3AOrder-NEW')</button>
 												</li>
 										</ol>
 								</li>
